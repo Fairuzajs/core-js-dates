@@ -81,8 +81,37 @@ function getDayName(date) {
  * Date('2024-02-13T00:00:00Z') => Date('2024-02-16T00:00:00Z')
  * Date('2024-02-16T00:00:00Z') => Date('2024-02-23T00:00:00Z')
  */
-function getNextFriday(/* date */) {
-  throw new Error('Not implemented');
+function getNextFriday(date) {
+  const data = new Date(date);
+  let currData = data.getDay();
+  switch (currData) {
+    case 0:
+      currData = 5;
+      break;
+    case 1:
+      currData = 4;
+      break;
+    case 2:
+      currData = 3;
+      break;
+    case 3:
+      currData = 2;
+      break;
+    case 4:
+      currData = 1;
+      break;
+    case 5:
+      currData = 7;
+      break;
+    case 6:
+      currData = 6;
+      break;
+    default:
+  }
+
+  data.setDate(data.getDate() + currData);
+
+  return data;
 }
 
 /**
@@ -132,8 +161,14 @@ function getCountDaysOnPeriod(/* dateStart, dateEnd */) {
  * '2024-02-02', { start: '2024-02-02', end: '2024-03-02' } => true
  * '2024-02-10', { start: '2024-02-02', end: '2024-03-02' } => true
  */
-function isDateInPeriod(/* date, period */) {
-  throw new Error('Not implemented');
+function isDateInPeriod(date, period) {
+  const date1 = new Date(period.start);
+  const date2 = new Date(period.end);
+  const date3 = new Date(date);
+
+  return (
+    date1.getTime() <= date3.getTime() && date2.getTime() >= date3.getTime()
+  );
 }
 
 /**
@@ -209,8 +244,21 @@ function getNextFridayThe13th(/* date */) {
  * Date(2024, 5, 1) => 2
  * Date(2024, 10, 10) => 4
  */
-function getQuarter(/* date */) {
-  throw new Error('Not implemented');
+function getQuarter(date) {
+  const data = new Date(date);
+  const getQuartal = data.getMonth();
+  let result;
+  if (getQuartal < 3) {
+    result = 1;
+  } else if (getQuartal > 2 && getQuartal < 6) {
+    result = 2;
+  } else if (getQuartal > 5 && getQuartal < 9) {
+    result = 3;
+  } else {
+    result = 4;
+  }
+
+  return result;
 }
 
 /**
@@ -247,8 +295,19 @@ function getWorkSchedule(/* period, countWorkDays, countOffDays */) {
  * Date(2022, 2, 1) => false
  * Date(2020, 2, 1) => true
  */
-function isLeapYear(/* date */) {
-  throw new Error('Not implemented');
+function isLeapYear(date) {
+  const data = new Date(date);
+  const leapYear = data.getFullYear();
+  let result;
+  if (leapYear % 4 === 0 && leapYear % 100 !== 0) {
+    result = true;
+  } else if (leapYear % 100 === 0 && leapYear % 400 === 0) {
+    result = true;
+  } else {
+    result = false;
+  }
+
+  return result;
 }
 
 module.exports = {
